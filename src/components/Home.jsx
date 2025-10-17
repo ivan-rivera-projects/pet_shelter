@@ -5,7 +5,7 @@ const Home = () => {
     <div className="home">
       <h2>Welcome to our Pet Shelter</h2>
       <p>
-        Welcome to AnyCompany Pet Shelter, where we care for and find loving
+        Welcome to We Are Little Giants Pet Shelter, where we care for and find loving
         homes for stray and abandoned pets. Our shelter provides a safe haven
         for dogs and cats while we work tirelessly to match them with their
         forever families. We believe every pet deserves a second chance at

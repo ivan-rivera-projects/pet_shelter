@@ -3,8 +3,8 @@ import React from 'react'
 const Footer = () => {
    return (
        <div className='footer'>
-           <p>Official Pet Shelter site of WALG</p>
-           <p>© 2025 We Are Little Giants. All rights reserved.</p>
+           <p>Official Pet Shelter site of We Are Little Giants</p>
+           <p>© {new Date().getFullYear()} We Are Little Giants Pet Shelter. All rights reserved.</p>
        </div>
    )
 }

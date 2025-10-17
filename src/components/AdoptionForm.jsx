@@ -37,6 +37,18 @@ const AdoptionForm = ({ pets }) => {
   return (
     <div className="form-container">
       <form className="form" onSubmit={handleSubmit}>
+        <h2 style={{
+          textAlign: 'center',
+          marginBottom: '10px',
+          background: 'linear-gradient(135deg, #9ff5c0 0%, #07704d 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          fontSize: '2rem',
+          fontWeight: '700'
+        }}>
+          Adoption Application
+        </h2>
         {errors ? <div className="error">{JSON.stringify(errors)}</div> : null}
         <div className="form-group">
           <label htmlFor="name">Your Name:</label>

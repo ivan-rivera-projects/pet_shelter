@@ -15,7 +15,7 @@ describe("Renders main page correctly", async () => {
         <App />
       </MemoryRouter>
     );
-    const h1 = await screen.queryByText("AnyCompany Pet Shelter");
+    const h1 = await screen.queryByText("We Are Little Giants Pet Shelter");
 
     // Assertions
     expect(h1).not.toBeNull();
@@ -30,7 +30,7 @@ describe("Renders main page correctly", async () => {
     );
     const year = new Date().getFullYear();
     const copyrights = await screen.queryByText(
-      "© " + year + " AnyCompany Pet Shelter. All rights reserved."
+      "© " + year + " We Are Little Giants Pet Shelter. All rights reserved."
     );
 
     // Assertions

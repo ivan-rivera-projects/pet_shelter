@@ -14,7 +14,7 @@ const AboutUs = () => {
         </div>
         <div className="col-right">
           <p>
-            Our team at AnyCompany Pet Shelter is dedicated to rescuing and
+            Our team at We Are Little Giants Pet Shelter is dedicated to rescuing and
             rehabilitating pets in need. We are a group of passionate
             individuals who work together to ensure every animal receives the
             care and love they deserve. With hundreds of pets entering our

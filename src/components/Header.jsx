@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 const Header = () => {
   const title = "We Are Little Giants Pet Shelter";
   return (
-    <div class="header">
-      <div class="header-title">
+    <div className="header">
+      <div className="header-title">
         <img id="logo" src={logo} alt="Company Logo" />
         <h1>We Are Little Giants Pet Shelter</h1>
       </div>
-      <nav class="navigation">
+      <nav className="navigation">
         <ul>
           <li>
             <Link to="/">Home</Link>
