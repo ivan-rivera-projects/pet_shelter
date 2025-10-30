@@ -7,7 +7,7 @@ const Header = () => {
     <div className="header">
       <div className="header-title">
         <img id="logo" src={logo} alt="Company Logo" />
-        <h1>We Are Little Giants Pet Shelter</h1>
+        <h1>{title}</h1>
       </div>
       <nav className="navigation">
         <ul>

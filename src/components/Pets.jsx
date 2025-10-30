@@ -1,18 +1,36 @@
 import daysInShelter from "../utils";
 import { useState } from "react";
+import { getPetImagesUrl } from "../services/api";
 
-function getImgUrl(fileName) {
-  const imgUrl = new URL(`../assets/${fileName}`, import.meta.url).href;
-  return imgUrl;
-}
+// Get S3 bucket URL from environment
+const S3_BUCKET_URL = getPetImagesUrl();
 
-const Pets = ({ pets }) => {
+const Pets = ({ pets, loading, error }) => {
   const [filter, setFilter] = useState("");
 
   const filteredPets = filter
     ? pets.filter((pet) => pet.species.toLowerCase() === filter.toLowerCase())
     : pets;
-  //console.log("filteredpets is this", filteredPets);
+
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="pets">
+        <h1>Available Pets for Adoption</h1>
+        <p>Loading pets...</p>
+      </div>
+    );
+  }
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="pets">
+        <h1>Available Pets for Adoption</h1>
+        <p style={{ color: 'red' }}>{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="pets">
@@ -30,7 +48,7 @@ const Pets = ({ pets }) => {
           <div className="pet" key={pet.id}>
             <div style={{ width: "200px" }}>
               <img
-                src={getImgUrl(pet.image)}
+                src={`${S3_BUCKET_URL}/${pet.image}`}
                 alt={pet.name}
                 style={{ height: "200px", width: "100%", objectFit: "cover" }}
               />

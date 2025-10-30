@@ -1,12 +1,17 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { createApplication } from "../services/api";
 
-const AdoptionForm = ({ pets }) => {
+const AdoptionForm = ({ pets, loading }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     pet: "",
   });
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,21 +22,35 @@ const AdoptionForm = ({ pets }) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const errors = "";
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    //create a new object from formData that has the following properties: applicant_name, email, pet_id, pet_image, pet_name, phone, species
-    /*const newApplication = {
-      applicant_name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      pet_id: formData.pet.id,
-      pet_image: formData.pet.image,
-      pet_name: formData.pet.name,
-      species: formData.pet.species,
-    };*/
-    console.log("Not implemented yet");
+    setSubmitting(true);
+    setError("");
+
+    try {
+      // Create application object matching API requirements
+      const newApplication = {
+        applicant_name: formData.name,
+        email: formData.email,
+        phone: formData.phone,
+        pet_id: String(formData.pet.id),
+        pet_image: formData.pet.image,
+        pet_name: formData.pet.name,
+        species: formData.pet.species,
+      };
+
+      // Submit to API
+      await createApplication(newApplication);
+
+      // Success! Redirect to applications page
+      alert('Application submitted successfully!');
+      navigate('/applications');
+    } catch (err) {
+      console.error('Failed to submit application:', err);
+      setError('Failed to submit application. Please try again.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -49,7 +68,7 @@ const AdoptionForm = ({ pets }) => {
         }}>
           Adoption Application
         </h2>
-        {errors ? <div className="error">{JSON.stringify(errors)}</div> : null}
+        {error ? <div className="error" style={{ color: 'red', marginBottom: '10px' }}>{error}</div> : null}
         <div className="form-group">
           <label htmlFor="name">Your Name:</label>
           <input
@@ -108,7 +127,9 @@ const AdoptionForm = ({ pets }) => {
           </select>
         </div>
         <div className="form-group">
-          <button type="submit">Submit</button>
+          <button type="submit" disabled={submitting || loading}>
+            {submitting ? 'Submitting...' : 'Submit'}
+          </button>
         </div>
       </form>
     </div>
