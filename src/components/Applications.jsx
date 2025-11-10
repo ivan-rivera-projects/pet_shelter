@@ -1,88 +1,59 @@
-import { useState, useEffect } from "react";
-import { fetchApplications } from "../services/api";
+import React, {useEffect, useState} from "react";
+import {Link} from 'react-router-dom'
+import axios from "axios";
 
-const formatDate = (dateString) => dateString.split("T")[0];
+const formatDate = (dateString) => dateString.split('T')[0];
+
 
 const Applications = () => {
+  const API_GATEWAY_BASE_URL = import.meta.env.VITE_API_GATEWAY_URL;
   const [applications, setApplications] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+    //   get applications from api
+    useEffect(() => {
+        // use axios to get applications
+        axios.get(`${API_GATEWAY_BASE_URL}/adoptions`)
+            .then((response) => {
+                console.log('successfully got applications from table', response.data);
+                setApplications(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
-  useEffect(() => {
-    const loadApplications = async () => {
-      try {
-        setLoading(true);
-        const applicationsData = await fetchApplications();
-        setApplications(applicationsData);
-        setError(null);
-      } catch (err) {
-        console.error('Failed to load applications:', err);
-        setError('Failed to load applications. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    loadApplications();
-  }, []);
 
-  if (loading) {
-    return (
-      <div className="table-container">
-        <h3>Applications</h3>
-        <p>Loading applications...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="table-container">
-        <h3>Applications</h3>
-        <p style={{ color: 'red' }}>{error}</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="table-container">
-      <h3>Applications</h3>
-      <table>
+  return <div className="table-container">
+    <h3>Applications</h3>
+    
+    {/* table that loops through all the applications. Each application has properties: appliant_name, email, phone, pet_id, pet_name, species, submitted_at */}
+    <table>
         <thead>
-          <tr>
-            <th>Applicant Name</th>
-            <th>Email</th>
-            <th>Phone #</th>
-            <th>Pet ID</th>
-            <th>Pet Name</th>
-            <th>Pet Species</th>
-            <th>Application Submitted on</th>
-          </tr>
+            <tr>
+                <th>Applicant Name</th>
+                <th>Number of Pets</th>
+                <th>Application Submitted on</th>
+                <th>View application details</th>
+            </tr>
         </thead>
         <tbody>
-          {applications.length === 0 ? (
-            <tr>
-              <td colSpan="7" style={{ textAlign: 'center' }}>
-                No applications yet
-              </td>
-            </tr>
-          ) : (
-            applications.map((application) => (
-              <tr key={application.applicationId}>
-                <td>{application.applicant_name}</td>
-                <td>{application.email}</td>
-                <td>{application.phone}</td>
-                <td>{application.pet_id}</td>
-                <td>{application.pet_name}</td>
-                <td>{application.species}</td>
-                <td>{formatDate(application.submitted_at)}</td>
-              </tr>
-            ))
-          )}
+            {/* if applications is empty list, show one row that says "No applications to show" */}
+            {applications.length === 0 && (
+                <tr>
+                    <td colSpan="7">No applications to show</td>
+                </tr>
+            )}
+            {applications.map((application) => (
+                <tr key={application.id}>
+                    <td>{application.applicant_name}</td>
+                    <td>{application.pets.length}</td>
+                    <td>{formatDate(application.submitted_at)}</td>
+                    <td><Link to={`/applications/${application.id}`}>View Details</Link></td>
+                </tr>
+            ))}
         </tbody>
-      </table>
-    </div>
-  );
+    </table>
+  </div>;
 };
 
 export default Applications;
