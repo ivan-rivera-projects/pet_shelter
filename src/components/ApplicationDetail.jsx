@@ -17,10 +17,15 @@ const ApplicationDetail = () => {
         // Function to fetch application data
         const fetchApplication = async () => {
             try {
+                console.log('API_GATEWAY_BASE_URL:', API_GATEWAY_BASE_URL);
+                console.log('Fetching:', `${API_GATEWAY_BASE_URL}/adoptions/${id}`);
                 const response = await axios.get(`${API_GATEWAY_BASE_URL}/adoptions/${id}`);
- 	     setApplication(response.data);
+                console.log('Response:', response.data);
+                setApplication(response.data);
                 setLoading(false);
             } catch (err) {
+                console.error('Error:', err);
+                console.error('Error response:', err.response);
                 setError(err.message);
                 setLoading(false);
             }
