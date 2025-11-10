@@ -5,6 +5,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 const formatDate = (dateString) => dateString.split('T')[0];
 
 const ApplicationDetail = () => {
+    // Force rebuild
     const API_GATEWAY_BASE_URL = import.meta.env.VITE_API_GATEWAY_URL;
     const S3_BUCKET_URL = import.meta.env.VITE_PET_IMAGES_BUCKET_URL;
 
