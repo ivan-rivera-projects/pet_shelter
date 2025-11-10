@@ -11,13 +11,18 @@ const Applications = () => {
     //   get applications from api
     useEffect(() => {
         // use axios to get applications
+        console.log('Fetching from:', `${API_GATEWAY_BASE_URL}/adoptions`);
         axios.get(`${API_GATEWAY_BASE_URL}/adoptions`)
             .then((response) => {
-                console.log('successfully got applications from table', response.data);
+                console.log('API Response:', response);
+                console.log('Response data:', response.data);
+                console.log('Data type:', typeof response.data);
+                console.log('Is array?', Array.isArray(response.data));
                 setApplications(response.data);
             })
             .catch((error) => {
-                console.log(error);
+                console.error('Error fetching applications:', error);
+                console.error('Error response:', error.response);
             });
     }, []);
 
