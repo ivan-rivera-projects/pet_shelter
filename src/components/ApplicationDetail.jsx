@@ -13,6 +13,8 @@ const ApplicationDetail = () => {
     const [loading, setLoading] = useState(true); // State to handle loading
     const [error, setError] = useState(null); // State to handle errors
     const navigate = useNavigate(); // Hook to navigate programmatically
+    
+    console.log('ApplicationDetail component rendered with id:', id);
    useEffect(() => {
         // Function to fetch application data
         const fetchApplication = async () => {
